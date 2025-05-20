@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Моят фермерски профил{% endblock %}
+
+{% block content %}
+<section class="pt60 pb60">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card p-4 shadow-sm">
+          <h3 class="mb-4 text-center">Моят фермерски профил</h3>
+
+          <div class="mb-3">
+            <strong>Име на фермата:</strong>
+            <p>{{ farmer.farm_name }}</p>
+          </div>
+          <div class="mb-3">
+            <strong>Описание:</strong>
+            <p>{{ farmer.description|linebreaksbr }}</p>
+          </div>
+          <div class="mb-3">
+            <strong>Локация:</strong>
+            <p>{{ farmer.location }}</p>
+          </div>
+          <div class="mb-3">
+            <strong>Телефон:</strong>
+            <p>{{ farmer.phone }}</p>
+          </div>
+          <div class="mb-3 text-center">
+            {% if farmer.image %}
+              <img src="{{ farmer.image.url }}" alt="Снимка на фермата" class="img-fluid rounded" style="max-height: 300px;">
+            {% else %}
+              <p class="text-muted">Няма качена снимка</p>
+            {% endif %}
+          </div>
+
+          <div class="text-center">
+            <a href="{% url 'farmer_profile_edit' %}" class="btn btn-thm">Редактирай профила</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

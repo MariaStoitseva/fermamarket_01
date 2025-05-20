@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Product Detail Page -->
+<div class="container py-5">
+  <div class="row">
+    <!-- Product Image -->
+    <div class="col-md-6">
+      <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}">
+    </div>
+
+    <!-- Product Info -->
+    <div class="col-md-6">
+      <h2 class="fw-bold mb-3">{{ product.title }}</h2>
+      <p class="text-muted">{{ product.description }}</p>
+      <p>Тегло: {{ product.weight }} {{ product.get_weight_unit_display }}</p>
+      <h4 class="text-primary">{{ product.price }} лв</h4>
+
+      {% if product.quantity > 0 %}
+        <form method="post" action="{% url 'add_to_cart' product.id %}" class="mt-4">
+          {% csrf_token %}
+          <div class="input-group mb-3" style="max-width: 200px;">
+            <input type="number" name="quantity" min="1" max="{{ product.quantity }}" value="1" class="form-control">
+            <button type="submit" class="btn btn-success">Добави в количката</button>
+          </div>
+        </form>
+        <p class="text-success">В наличност: {{ product.quantity }} бр.</p>
+      {% else %}
+        <p class="text-danger fw-bold">Изчерпан</p>
+      {% endif %}
+
+      <p class="mt-4"><strong>Производител:</strong> {{ product.farmer.farm_name }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

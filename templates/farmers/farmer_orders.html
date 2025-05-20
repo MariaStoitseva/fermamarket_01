@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Поръчки към мен{% endblock %}
+
+{% block content %}
+<section class="pt60 pb60">
+  <div class="container">
+    <h3 class="mb40">Поръчки на клиенти към моята ферма</h3>
+
+    {% if order_items %}
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Продукт</th>
+            <th>Клиент</th>
+            <th>Количество</th>
+            <th>Дата</th>
+            <th>Статус</th>
+            <th>Действие</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in order_items %}
+          <tr>
+            <td>{{ item.product.title }}</td>
+            <td>{{ item.order.client.full_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.order.created_at|date:"d.m.Y H:i" }}</td>
+            <td>{{ item.get_status_display }}</td>
+            <td>
+              {% if item.status != "Sent" %}
+              <form method="post" action="{% url 'mark_as_sent' item.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-success">Маркирай като изпратено</button>
+              </form>
+              {% else %}
+              <span class="text-muted">Изпратено</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      <p>Все още няма поръчки към вашите продукти.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

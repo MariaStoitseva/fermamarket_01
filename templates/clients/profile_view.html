@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Моят профил{% endblock %}
+
+{% block content %}
+<section class="pt60 pb60">
+  <div class="container">
+    <h3 class="mb30">Моят профил</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Име:</strong> {{ profile.full_name }}</li>
+          <li class="list-group-item"><strong>Имейл:</strong> {{ user.email }}</li>
+          <li class="list-group-item"><strong>Телефон:</strong> {{ profile.phone }}</li>
+          <li class="list-group-item"><strong>Адрес:</strong> {{ profile.address }}</li>
+        </ul>
+        <a href="{% url 'edit_client_profile' %}" class="btn btn-thm mt-4">Редактирай профил</a>
+          <a href="{% url 'logout' %}" class="btn btn-thm mt-4">Изход</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

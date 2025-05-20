@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Каталог{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<section class="py-3 bgc-f9">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Начало</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Каталог</li>
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<!-- Product Catalog -->
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <!-- Sidebar (филтри - по избор) -->
+      <div class="col-lg-3 d-none d-lg-block">
+  <h5 class="text-dark fw-bold mb-3">Категории</h5>
+  <ul class="list-unstyled categories-sidebar">
+    <li class="mb-2 {% if not selected_category %}active{% endif %}">
+      <a href="{% url 'product_catalog' %}" class="d-block py-2 px-3 rounded">
+        Всички
+      </a>
+    </li>
+    {% for cat in categories %}
+    <li class="mb-2 {% if selected_category == cat.name %}active{% endif %}">
+      <a href="{% url 'product_catalog' %}?category={{ cat.name }}" class="d-block py-2 px-3 rounded">
+        {{ cat.name }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+      <!-- Product Grid -->
+      <div class="col-lg-9">
+        <div class="row g-4">
+        <form method="get" class="d-flex align-items-center mb-4">
+            {% if search_query %}
+                <input type="hidden" name="search" value="{{ search_query }}">
+            {% endif %}
+            {% if selected_category %}
+                <input type="hidden" name="category" value="{{ selected_category }}">
+            {% endif %}
+
+            <label class="me-2">Сортирай по:</label>
+            <select name="sort" onchange="this.form.submit()" class="form-select w-auto">
+                <option value="">-- Без сортиране --</option>
+                <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>Цена ↑</option>
+                <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>Цена ↓</option>
+            </select>
+        </form>
+
+          {% for product in products %}
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm border-0">
+              <a href="{% url 'product_detail' product.id %}">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}">
+              </a>
+              <div class="card-body text-center p-2">
+                <h6 class="card-title mb-1">
+                <a href="{% url 'product_detail' product.id %}" class="text-decoration-none text-dark">
+                    {{ product.title }}
+                </a>
+              </h6>
+               <p>Тегло: {{ product.weight }} {{ product.get_weight_unit_display }}</p>
+                <p class="mb-2 fw-bold text-success">{{ product.price }} лв</p>
+
+              <div class="d-flex justify-content-between gap-2">
+                <!-- Бутон Виж -->
+                <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-secondary btn-sm w-50">
+                    Виж
+                </a>
+
+                <!-- Бутон Добави в количката или Изчерпано -->
+                 {% if product.quantity > 0 %}
+                <form method="post" action="{% url 'add_to_cart' product.id %}" class="w-50">
+                    {% csrf_token %}
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="btn btn-thm btn-sm w-100">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </form>
+                    {% else %}
+                    <div class="text-danger fw-bold w-50 text-center">Изчерпано</div>
+                {% endif %}
+              </div>
+            </div>
+
+            </div>
+          </div>
+          {% empty %}
+          <div class="col-12">
+            <p class="text-muted">Няма налични продукти.</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

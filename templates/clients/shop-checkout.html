@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Поръчка{% endblock %}
+
+{% block content %}
+<section class="checkout-page pt60 pb60">
+  <div class="container">
+    <div class="row">
+      
+      <!-- Форма за доставка -->
+      <div class="col-lg-6">
+        <div class="checkout_form">
+          <h4 class="mb30">Данни за доставка:</h4>
+
+          <form method="post" action="{% url 'checkout' %}">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-group mb-3">
+              {{ form.full_name.label_tag }}
+              {{ form.full_name }}
+              {{ form.full_name.errors }}
+            </div>
+
+            <div class="form-group mb-3">
+              {{ form.address.label_tag }}
+              {{ form.address }}
+              {{ form.address.errors }}
+            </div>
+
+            <div class="form-group mb-3">
+              {{ form.phone.label_tag }}
+              {{ form.phone }}
+              {{ form.phone.errors }}
+            </div>
+
+            <button type="submit" class="btn btn-thm mt-3">Потвърди поръчката</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Обобщение на количката -->
+      <div class="col-lg-6">
+        <div class="order_sidebar_widget">
+          <h4 class="mb25">Вашата поръчка</h4>
+
+          {% if cart_items %}
+          <ul class="list-unstyled">
+            {% for item in cart_items %}
+            <li class="d-flex justify-content-between border-bottom py-2">
+              <div>
+                {{ item.product.title }} x{{ item.quantity }}
+              </div>
+              <div>{{ item.total|floatformat:2 }} лв</div>
+            </li>
+            {% endfor %}
+          </ul>
+
+          <div class="d-flex justify-content-between fw-bold mt-3">
+            <span>Общо:</span>
+            <span>{{ total_price|floatformat:2 }} лв</span>
+          </div>
+          {% else %}
+            <p>Количката ви е празна.</p>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

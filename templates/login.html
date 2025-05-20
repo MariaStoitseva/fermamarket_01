@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<section class="our-log bgc-f9 pt60 pb60">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="log_wrap">
+          <div class="heading text-center">
+            <h3 class="mb-4">Вход в акаунта</h3>
+          </div>
+          <div class="login-form">
+
+            <form method="post">
+              {% csrf_token %}
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                  {{ form.non_field_errors.0 }}
+                </div>
+              {% endif %}
+
+              <div class="form-group input-group mb-3">
+                <span class="input-group-text"><i class="flaticon-profile"></i></span>
+                {{ form.username }}
+              </div>
+              {{ form.username.errors }}
+
+              <div class="form-group input-group mb-3">
+                <span class="input-group-text"><i class="flaticon-password"></i></span>
+                {{ form.password }}
+              </div>
+              {{ form.password.errors }}
+
+              <div class="form-group text-center mt-4">
+                <button type="submit" class="btn btn-thm w-100">Вход</button>
+              </div>
+            </form>
+
+            <div class="text-center mt-3">
+              <p>Нямате акаунт? <a href="{% url 'register' %}">Регистрирайте се</a></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

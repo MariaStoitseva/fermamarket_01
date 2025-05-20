@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Начало | FermaMarket{% endblock %}
+
+{% block content %}
+<section class="hero pt60 pb60">
+  <div class="container text-center">
+    <h1 class="mb20">Добре дошли във <span class="text-thm">FermaMarket</span></h1>
+    <p class="lead mb30">Свързваме Ви директно с български фермери и натурална храна.</p>
+    <a href="{% url 'product_catalog' %}" class="btn btn-thm">Разгледай каталога</a>
+  </div>
+</section>
+
+<section class="features pt40 pb40 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 text-center mb-4">
+        <i class="fas fa-tractor fa-3x text-thm"></i>
+        <h5 class="mt-3">Директно от фермер</h5>
+        <p>Купувай локално и подкрепи малкия производител.</p>
+      </div>
+      <div class="col-md-4 text-center mb-4">
+        <i class="fas fa-leaf fa-3x text-thm"></i>
+        <h5 class="mt-3">Натурални продукти</h5>
+        <p>Без добавки, без посредници – само чиста храна.</p>
+      </div>
+      <div class="col-md-4 text-center mb-4">
+        <i class="fas fa-shipping-fast fa-3x text-thm"></i>
+        <h5 class="mt-3">Доставка до врата</h5>
+        <p>Удобна онлайн поръчка и бърза доставка до адрес.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

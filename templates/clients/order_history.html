@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}История на поръчки{% endblock %}
+
+{% block content %}
+<section class="pt60 pb60">
+  <div class="container">
+    <h3 class="mb40">Моите поръчки</h3>
+    {% if orders %}
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Сума</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>
+                <a href="{% url 'order_details' order.id %}">#{{ order.id }}</a>
+            </td>
+            <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.total_price }} лв</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p>Все още нямате направени поръчки.</p>
+    <a href="{% url 'product_catalog' %}" class="btn btn-thm mt-3">Пазарувай сега</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

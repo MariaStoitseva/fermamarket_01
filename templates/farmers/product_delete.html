@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Изтриване на продукт{% endblock %}
+
+{% block content %}
+<section class="our-log bgc-f9 pt60 pb60">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="log_wrap">
+          <div class="heading text-center">
+            <h3 class="mb-4 text-danger">Сигурни ли сте, че искате да изтриете този продукт?</h3>
+          </div>
+          <div class="login-form">
+            <div class="text-center mb-3">
+              <p><strong>{{ product.title }}</strong></p>
+              {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid rounded" style="max-height: 250px;">
+              {% endif %}
+            </div>
+            <form method="post">
+              {% csrf_token %}
+              <div class="form-group text-center">
+                <button type="submit" class="btn btn-danger">Да, изтрий</button>
+                <a href="{% url 'product_list' %}" class="btn btn-outline-secondary ms-2">Отказ</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% load static %}
+
+<header class="bgc-thm1">
+  <nav class="navbar navbar-expand-lg color-white py-3">
+    <div class="container">
+      <!-- Logo -->
+      <a class="navbar-brand fw-bold fs-3 color-white" href="{% url 'home' %}">
+        Ferma<span class="text-thm">Market</span>
+      </a>
+    
+    <!-- Search -->
+    <li class="nav-item d-none d-lg-block w-100 ms-lg-3" style="max-width: 300px;">
+    {% if not user.is_authenticated or user.groups.first.name != 'Farmers' %}
+        <form method="get" action="{% url 'product_catalog' %}" class="input-group">
+            <input class="form-control" type="text" name="search" placeholder="Търси продукти…" value="{{ search_query|default:'' }}">
+            <button type="submit" class="btn btn-warning"><i class="fas fa-search"></i></button>
+        </form>
+    {% endif %}
+    </li>
+
+
+      <!-- Mobile Toggle -->
+      <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+        <span><i class="fas fa-bars text-white fa-lg"></i></span>
+      </button>
+
+      <!-- Navigation -->
+      <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+          {% if user.is_authenticated %}
+            {% if user.groups.first.name == 'Clients' %}
+              <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'product_catalog' %}">Каталог</a></li>
+              <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'order_history' %}">Поръчки</a></li>
+              <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'client_profile' %}"><i class="fas fa-user"></i></a></li>
+              <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'view_cart' %}"><i class="fas fa-shopping-cart"></i></a></li>
+            {% elif user.groups.first.name == 'Farmers' %}
+              <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'product_list' %}">Продукти</a></li>
+              <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'farmer_orders' %}">Поръчки</a></li>
+              <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'farmer_profile' %}"><i class="fas fa-user"></i></a></li>
+            {% endif %}
+            <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'product_catalog' %}">Каталог</a></li>
+            <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Вход</a></li>
+            <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Регистрация</a></li>
+            <li class="nav-item"><a class="nav-link text-white fs-6" href="{% url 'view_cart' %}"><i class="fas fa-shopping-cart"></i></a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+
+
+{#{% load static %}#}
+{##}
+{#<header class="header-nav menu_style_home_one main-menu bgc-thm1 color-white py-3">#}
+{#  <nav class="navbar navbar-expand-lg">#}
+{#    <div class="container">#}
+{##}
+{#      <!-- Logo -->#}
+{#      <a class="navbar-brand fw-bold fs-3 color-white" href="{% url 'home' %}">#}
+{#        Ferma<span class="text-thm">Market</span>#}
+{#      </a>#}
+{##}
+{#      <!-- Mobile Toggle -->#}
+{#      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">#}
+{#        <span class="navbar-toggler-icon"></span>#}
+{#      </button>#}
+{##}
+{#      <!-- Menu Items -->#}
+{#      <div class="collapse navbar-collapse" id="navbarMenu">#}
+{#        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">#}
+{##}
+{#          <!-- Search -->#}
+{#          {% if user.is_authenticated and user.groups.first.name == 'Clients' %}#}
+{#          <li class="nav-item d-none d-lg-block w-100" style="max-width: 300px;">#}
+{#            <form method="get" action="{% url 'product_catalog' %}" class="input-group">#}
+{#              <input class="form-control" type="text" name="search" placeholder="Търси продукти…" value="{{ search_query|default:'' }}">#}
+{#              <button type="submit" class="btn btn-light"><i class="fas fa-search"></i></button>#}
+{#            </form>#}
+{#          </li>#}
+{#          {% endif %}#}
+{##}
+{#          <!-- Dynamic Navigation -->#}
+{#          {% if not user.is_authenticated %}#}
+{#            <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'product_catalog' %}">Каталог</a></li>#}
+{#          {% elif user.groups.first.name == 'Clients' %}#}
+{#            <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'product_catalog' %}">Каталог</a></li>#}
+{#            <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'order_history' %}">Поръчки</a></li>#}
+{#          {% elif user.groups.first.name == 'Farmers' %}#}
+{#            <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'product_list' %}">Моите продукти</a></li>#}
+{#            <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'farmer_orders' %}">Поръчки</a></li>#}
+{#          {% endif %}#}
+{##}
+{#          <!-- User Controls -->#}
+{#          {% if user.is_authenticated %}#}
+{#            {% if user.groups.first.name == 'Clients' %}#}
+{#              <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'client_profile' %}"><i class="fas fa-user"></i></a></li>#}
+{#              <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'view_cart' %}"><i class="fas fa-shopping-cart"></i></a></li>#}
+{#            {% elif user.groups.first.name == 'Farmers' %}#}
+{#              <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'farmer_profile' %}"><i class="fas fa-user"></i></a></li>#}
+{#            {% endif %}#}
+{#            <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a></li>#}
+{#          {% else %}#}
+{#            <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Вход</a></li>#}
+{#            <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Регистрация</a></li>#}
+{#            <li class="nav-item"><a class="nav-link color-white fs-6" href="{% url 'view_cart' %}"><i class="fas fa-shopping-cart"></i> Количка</a></li>#}
+{#          {% endif %}#}
+{##}
+{#        </ul>#}
+{#      </div>#}
+{##}
+{#    </div>#}
+{#  </nav>#}
+{#</header>#}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Order Success{% endblock %}
+
+{% block content %}
+<section class="pt60 pb60">
+  <div class="container text-center">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="mb-4">
+          <i class="fa-regular fa-5x fa-circle-check" style="color: #f5c34b;"></i>
+        </div>
+        <h2 class="fw-bold mb-3">Благодарим за Вашата поръчка!</h2>
+        <p class="mb-4">Ще се свържем с Вас при потвърждение на доставката. Можете да следите всички поръчки в личния си профил.</p>
+        <a href="{% url 'order_history' %}" class="btn btn-thm me-2">Моите поръчки</a>
+        <a href="{% url 'product_catalog' %}" class="btn btn-outline-secondary">Продължи с пазаруването</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

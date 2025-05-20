@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Редакция на фермерски профил{% endblock %}
+
+{% block content %}
+<section class="our-log bgc-f9 pt60 pb60">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="log_wrap">
+          <div class="heading text-center">
+            <h3 class="mb-4">Редакция на фермерски профил</h3>
+          </div>
+          <div class="login-form">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <div class="form-group mb-3">
+                <label for="id_farm_name">Име на фермата</label>
+                {{ form.farm_name }}
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="id_description">Описание</label>
+                {{ form.description }}
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="id_location">Локация</label>
+                {{ form.location }}
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="id_phone">Телефон</label>
+                {{ form.phone }}
+              </div>
+
+              <div class="form-group mb-4">
+                <label for="id_image">Снимка</label>
+                {{ form.image }}
+              </div>
+
+              <div class="form-group text-center">
+                <button type="submit" class="btn btn-thm w-100">Запази</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

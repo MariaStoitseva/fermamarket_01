@@ -1,0 +1,10 @@
+<h2>Здравейте {{ client.full_name }},</h2>
+<p>Благодарим за вашата поръчка №{{ order.id }}. Ето подробностите:</p>
+<ul>
+    {% for item in cart_items %}
+    <li>{{ item.product.title }} - количество: {{ item.quantity }}, цена: {{ item.total }} лв.</li>
+    {% endfor %}
+</ul>
+<p><strong>Обща сума: {{ total_price }} лв.</strong></p>
+<p>Ще се свържем с вас скоро за подробности относно доставката.</p>
+<p>Поздрави, <br>Екипът на FermaMarket</p>

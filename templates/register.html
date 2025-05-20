@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<section class="our-log bgc-f9 pt60 pb60">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="log_wrap">
+          <div class="heading text-center">
+            <h3 class="mb-4">Създаване на акаунт</h3>
+          </div>
+          <div class="login-form">
+
+            <form method="post">
+              {% csrf_token %}
+
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                  {{ form.non_field_errors.0 }}
+                </div>
+              {% endif %}
+
+              <div class="form-group input-group mb-3">
+                <span class="input-group-text"><i class="flaticon-profile"></i></span>
+                {{ form.username }}
+              </div>
+              {{ form.username.errors }}
+
+              <div class="form-group input-group mb-3">
+                <span class="input-group-text"><i class="flaticon-email-1"></i></span>
+                {{ form.email }}
+              </div>
+              {{ form.email.errors }}
+
+              <div class="form-group input-group mb-3">
+                <span class="input-group-text"><i class="flaticon-password"></i></span>
+                {{ form.password1 }}
+              </div>
+              {{ form.password1.errors }}
+
+              <div class="form-group input-group mb-3">
+                <span class="input-group-text"><i class="flaticon-password"></i></span>
+                {{ form.password2 }}
+              </div>
+              {{ form.password2.errors }}
+               <div class="form-group mb-4">
+               <label class="form-label fw-bold fs-5">Избери роля:</label>
+                  <div class="row">
+                    {% for radio in form.role %}
+                    <div class="col-6">
+                        <label class="border p-3 rounded d-flex align-items-center justify-content-start gap-2 cursor-pointer">
+                        {{ radio.tag }}
+                        <span class="mb-0 fw-semibold">{{ radio.choice_label }}</span>
+                        </label>
+                    </div>
+                    {% endfor %}
+                  </div>
+               </div>
+              {{ form.role.errors }}
+
+              <div class="form-group text-center mt-4">
+                <button type="submit" class="btn btn-thm w-100">Регистрация</button>
+              </div>
+            </form>
+
+            <div class="text-center mt-3">
+              <p>Вече имате акаунт? <a href="{% url 'login' %}">Вход</a></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
