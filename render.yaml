@@ -1,0 +1,10 @@
+# render.yaml
+services:
+  - type: web
+    name: fermamarket
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn fermamarket.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: fermamarket.settings
