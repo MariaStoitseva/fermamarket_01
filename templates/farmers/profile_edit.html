@@ -35,9 +35,17 @@
               </div>
 
               <div class="form-group mb-4">
-                <label for="id_image">Снимка</label>
-                {{ form.image }}
-              </div>
+  <label for="id_image">Снимка</label>
+  
+  {% if form.instance.image %}
+    <div class="mb-2">
+      <img src="{{ form.instance.image.url }}" alt="Текуща снимка" class="img-fluid rounded" style="max-height: 200px;">
+    </div>
+  {% endif %}
+  
+  {{ form.image }}
+</div>
+
 
               <div class="form-group text-center">
                 <button type="submit" class="btn btn-thm w-100">Запази</button>

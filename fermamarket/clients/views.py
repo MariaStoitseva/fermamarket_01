@@ -5,19 +5,19 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.http import require_POST
 from .forms import ClientProfileForm, CheckoutForm
 from .models import ClientProfile
-from ..customusers.decorators import group_required
+from django.contrib.auth.decorators import login_required, permission_required
 from ..farmers.models import Product, Category
 from ..orders.models import Order, OrderItem
 
 
 @login_required
-@group_required('Clients')
+@permission_required('clients.view_clientprofile', raise_exception=True)
 def view_client_profile(request):
     profile = getattr(request.user, 'clientprofile', None)
     return render(request, 'clients/profile_view.html', {'profile': profile})
 
 
-@group_required('Clients')
+@permission_required('clients.view_clientprofile', raise_exception=True)
 def edit_client_profile(request):
     profile = getattr(request.user, 'clientprofile', None)
     if not profile:
@@ -90,7 +90,7 @@ from django.views.decorators.http import require_http_methods
 
 
 @login_required
-@group_required('Clients')
+@permission_required('clients.view_clientprofile', raise_exception=True)
 @require_http_methods(["GET", "POST"])
 def view_cart(request):
     cart = request.session.get('cart', {})
@@ -151,7 +151,7 @@ def view_cart(request):
 
 
 @login_required
-@group_required('Clients')
+@permission_required('clients.view_clientprofile', raise_exception=True)
 def checkout(request):
     cart = request.session.get('cart', {})
     if not cart:
@@ -265,12 +265,13 @@ def checkout(request):
     })
 
 @login_required
-@group_required('Clients')
+@permission_required('clients.view_clientprofile', raise_exception=True)
 def order_success(request):
     return render(request, 'clients/order_success.html')
 
 
 @login_required
+@permission_required('orders.view_order', raise_exception=True)
 def order_history(request):
     client_profile = request.user.clientprofile
     orders = Order.objects.filter(client=client_profile).order_by('-created_at')
