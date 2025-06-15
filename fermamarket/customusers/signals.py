@@ -1,6 +1,8 @@
 from django.db.models.signals import post_migrate
 from django.contrib.auth.models import Group, Permission
 from django.dispatch import receiver
+from django.conf import settings
+
 
 @receiver(post_migrate)
 def create_user_groups(sender, **kwargs):
@@ -34,11 +36,15 @@ def create_user_groups(sender, **kwargs):
     def add_permissions(group, perms_dict):
         for app_label, codenames in perms_dict.items():
             for codename in codenames:
-                try:
-                    perm = Permission.objects.get(codename=codename, content_type__app_label=app_label)
+                perm = Permission.objects.filter(
+                    codename=codename,
+                    content_type__app_label=app_label
+                ).first()
+
+                if perm:
                     group.permissions.add(perm)
-                except Permission.DoesNotExist:
-                    print(f"Permission {codename} в {app_label} не е намерено!")
+                elif settings.DEBUG:
+                    print(f"[Warning] Permission {codename} в {app_label} не е намерено.")
 
     add_permissions(farmers_group, farmers_perms)
     add_permissions(clients_group, clients_perms)
